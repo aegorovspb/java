@@ -2,143 +2,158 @@ import java.util.Scanner;
 public class Main {
     public static void main (String[] args) {
 
+        // получаем данные, разделяем полученную строку по пробелу, создаем три переменные где
+        // first - первый элемент
+        // second - математическая операция
+        // fird - третий элемент
+        // далее проводим математические операции Int для 1,2,3... Str для I,II,II...
+
         Scanner s = new Scanner(System.in);
         System.out.println("Введите строку ");
-        // получаем данные, тип данных строка
+
         String typedStr = s.nextLine();
         System.out.println("Вы ввели " +typedStr);
-        // режем строку по пробелу,
         String [] strings = typedStr.split(" ");
-        // выводим значения массива
+
         String first = strings[0];
         String second = strings[1];
         String fird = strings[2];
 
-        System.out.println("Первый элемент массива " +first);
+        // выводим значения переменных
+/*        System.out.println("Первый элемент массива " +first);
         System.out.println("Второй элемент массива " +second);
-        System.out.println("Третий элемент массива " +fird);
+        System.out.println("Третий элемент массива " +fird);*/
 
-        // меняем тип данных на integer
-        // пытаемся поменять тип данных если не получается обрабатываем как String
+        // обработка введенных данных
+        // пытаемся поменять тип данных на integer
+        // если    получается обрабатываем как Integer
+        // если не получается обрабатываем как String  catch (NumberFormatException e)
         try {
-            int test = Integer.parseInt(first.trim());
-        } catch (NumberFormatException e) {
+            // обработка данных как Integer
+            // меняем тип данных на integer
+            int firstInt = Integer.parseInt(first.trim());
+            // System.out.println("Первый символ в Integer " +firstInt);
+            // юникод введенного символа
+            // задаем выведенный символ юникод в переменную
+            // обрабатывается только первый знак
+            int secondInt = second.codePointAt(0);
+            int firdInt = Integer.parseInt(fird.trim());
 
-            // возвращает номер символа в кодировке юникод
-            int firstStr = first.codePointAt(0);
-            System.out.println("Первый символ тип String " +firstStr);
-            // обрабатываем второй символ (мат операция)
-            // получаем значение в юникод
-            int secondStr = second.codePointAt(0);
-            System.out.println("Второй символ тип String " +secondStr);
-            // возвращает номер символа в кодировке юникод
-            int firdStr = fird.codePointAt(0);
-            System.out.println("Третий символ тип String " +firdStr);
-
-            // переводим I , V , X в цифровые значения путем вычитания
-            // первое введенное значение
-            switch(firstStr) {
-                // I юникод 73 = 1
-                case 73:
-                    firstStr = firstStr - 72;
-                    break;
-                // V юникод 86 = 5
-                case 86:
-                    firstStr = firstStr - 81;
-                    break;
-                // X юникод 88 = 10
-                case 88:
-                    firstStr = firstStr - 78;
-                    break;
-                // вместо else
-                default:
-                    System.out.println("Правильно укажите число 1 Str (I, V, X)");
-            }
-            // переводим I , V , X в цифровые значения путем вычитания
-            // первое введенное значение
-            switch(firdStr) {
-                // I юникод 73 = 1
-                case 73:
-                    firdStr = firdStr - 72;
-                    break;
-                // V юникод 86 = 5
-                case 86:
-                    firdStr = firdStr - 81;
-                    break;
-                // X юникод 88 = 10
-                case 88:
-                    firdStr = firdStr - 78;
-                    break;
-                // вместо else
-                default:
-                    System.out.println("Правильно укажите число 2 Str (I, V, X)");
-            }
-            // обработка математических операций Str
-            // переводим математический символ в юникод, на основе числа создаем условие
-            switch(secondStr){
+            // обработка математических операций Int
+            // переводим математический символ в юникод, на основе полученного числа создаем условие
+            switch(secondInt){
                 case 43 :
-                    int additionStr = firstStr + firdStr;
-                    System.out.println("Сложение Str " +additionStr);
+                    int addition = firstInt + firdInt;
+                    System.out.println("Сложение Int " +addition);
                     break;
                 case 45 :
-                    int deductionStr = firstStr - firdStr;
-                    System.out.println("Вычетание Str " +deductionStr);
+                    int deduction = firstInt - firdInt;
+                    System.out.println("Вычетание Int " +deduction);
                     break;
                 case 47 :
-                    int divisionStr = firstStr / firdStr;
-                    System.out.println("Деление Str " +divisionStr);
+                    int division = firstInt / firdInt;
+                    System.out.println("Деление Int " +division);
                     break;
                 case 42 :
-                    int multiplicationStr = firstStr * firdStr;
-                    System.out.println("Умножение Str " +multiplicationStr);
+                    int multiplication = firstInt * firdInt;
+                    System.out.println("Умножение Int " +multiplication);
                     break;
                 // вместо else
                 default:
-                    System.out.println("Правильно укажите математическую операцию Str (+,-,/,*)");
-
+                    System.out.println("Правильно укажите математическую операцию Int (+,-,/,*)");
             }
-            // выход из цикла Str
-            // если введеное число больше 0 завершаем работу программы
-            if (firstStr > 0){
-                System.out.println("Обработка str завершеная");
-                System.exit (1);
+
+            // завершена обработка Int (Арабски), начинается обработка Str (Римских)
+        } catch (NumberFormatException e) {
+
+            // создаем массив для обработки входящих значений от 0 до 10
+            String[] romanInput = {"O", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X",};
+
+            // ищем по индексу первый символ в массиве и возвращаем найденный индекс
+            // если элемента нет выбрасывается -1
+            int indexFirst = -1;
+            for (int i=0; i<romanInput.length; i++) {
+                if (romanInput[i].equals(first)) {
+                    indexFirst = i;
+                    break;
+                }
+            }
+
+            // ищем по индексу первый символ в массиве и возвращаем найденный индекс
+            // если элемента нет выбрасывается -1
+            int indexFird = -1;
+            for (int iii=0; iii<romanInput.length; iii++) {
+                if (romanInput[iii].equals(fird)) {
+                    indexFird = iii;
+                    break;
+                }
+            }
+            // System.out.println(indexFird +" "+indexFirst +" полученное из Str первое и третье число");
+
+            // обработка математических операция для романских цифр
+            // переводим математический символ в юникод,
+            int secondStr = second.codePointAt(0);
+
+            // на основе полученного числа юникод создаем условие
+            // в которое прописываем математические операции + - * /
+            // в мат операции создаем класс Сonversion в нем метод gettingString для исключения повторов romanList
+            switch(secondStr){
+                case 43 :
+                    // additionStrByIndex - это результат мат операции для Str
+                    // отправляем её значение (индекс для массива) в класс conversionSum и метод additionStrByIndex
+                    // в ответ получаем значение из массива
+                    int additionStrByIndex = indexFirst + indexFird;
+
+                    Сonversion conversionSum = new Сonversion();
+                    String additionAfter = conversionSum.gettingString(additionStrByIndex);
+                    System.out.println("Сложение Str " +additionAfter);
+                    break;
+                case 45 :
+                    int deductionStrByIndex = indexFirst - indexFird;
+
+                    Сonversion conversionDed = new Сonversion();
+                    String deductionAfter = conversionDed.gettingString(deductionStrByIndex);
+                    System.out.println("Вычетание Str " +deductionAfter);
+                    break;
+                case 47 :
+                    int divisionStrByIndex = indexFirst / indexFird;
+
+                    Сonversion conversionDiv = new Сonversion();
+                    String divisionAfter = conversionDiv.gettingString(divisionStrByIndex);
+                    System.out.println("Деление Int " +divisionAfter);
+                    break;
+                case 42 :
+                    int multiplicationStrByIndex = indexFirst * indexFird;
+
+                    Сonversion conversionMult = new Сonversion();
+                    String multiplicationAfter = conversionMult.gettingString(multiplicationStrByIndex);
+                    System.out.println("Умножение Int " +multiplicationAfter);
+                    break;
+                // вместо else
+                default:
+                    System.out.println("Правильно укажите математическую операцию Int (+,-,/,*)");
             }
         }
+    }
+}
+// class Сonversion 2 -> II
+// создадим класс для конвертации Арабских цифр в Римски
+// в классе создадим массив с полным списком Римских цифр до 100 (макс значение 10*10)
+// создадим метод в который передается Арабская цифра 2, по индексу 2 сопоставим цифру II в массиве
 
-        // Обработка данных как Integer
-        // меняем тип данных на integer
-        int firstInt = Integer.parseInt(first.trim());
-        System.out.println("Первый символ в Integer " +firstInt);
-        // юникод введенного символа
-        // задаем выведенный символ юникод в переменную
-        // обрабатывается только первый знак
-        int secondInt = second.codePointAt(0);
-        System.out.println("Второй символ в Integer " +secondInt);
-        int firdInt = Integer.parseInt(fird.trim());
-        System.out.println("Третий символ в Integer " +firdInt);
-
-        // обработка математических операций Int
-        // переводим математический символ в юникод, на основе числа создаем условие
-        switch(secondInt){
-            case 43 :
-                int addition = firstInt + firdInt;
-                System.out.println("Сложение Int " +addition);
-                break;
-            case 45 :
-                int deduction = firstInt - firdInt;
-                System.out.println("Вычетание Int " +deduction);
-                break;
-            case 47 :
-                int division = firstInt / firdInt;
-                System.out.println("Деление Int " +division);
-                break;
-            case 42 :
-                int multiplication = firstInt * firdInt;
-                System.out.println("Умножение Int " +multiplication);
-                break;
-            // вместо else
-            default:
-                System.out.println("Правильно укажите математическую операцию Int (+,-,/,*)");
-        }
+class Сonversion{
+    String gettingString(int indexInRomanList) {
+        String[] romanList = {"O", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X",
+                "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX",
+                "XXI", "XXII", "XXIII", "XXIV", "XXV", "XXVI", "XXVII", "XXVIII", "XXIX", "XXX",
+                "XXXI", "XXXII", "XXXIII", "XXXIV", "XXXV", "XXXVI", "XXXVII", "XXXVIII", "XXXIX", "XL",
+                "XLI", "XLII", "XLIII", "XLIV", "XLV", "XLVI", "XLVII", "XLVIII", "XLIX", "L",
+                "LI", "LII", "LIII", "LIV", "LV", "LVI", "LVII", "LVIII", "LIX", "LX",
+                "LXI", "LXII", "LXIII", "LXIV", "LXV", "LXVI", "LXVII", "LXVIII", "LXIX", "LXX",
+                "LXXI", "LXXII", "LXXIII", "LXXIV", "LXXV", "LXXVI", "LXXVII", "LXXVIII", "LXXIX", "LXXX",
+                "LXXXI", "LXXXII", "LXXXIII", "LXXXIV", "LXXXV", "LXXXVI", "LXXXVII", "LXXXVIII", "LXXXIX", "XC",
+                "XCI", "XCII", "XCIII", "XCIV", "XCV", "XCVI", "XCVII", "XCVIII", "XCIX", "C"
+        };
+        return romanList[indexInRomanList];
     }
 }
