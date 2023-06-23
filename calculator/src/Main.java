@@ -19,23 +19,16 @@ public class Main {
         String second = strings[1];
         String fird = strings[2];
 
-        // выводим значения переменных
-/*        System.out.println("Первый элемент массива " +first);
-        System.out.println("Второй элемент массива " +second);
-        System.out.println("Третий элемент массива " +fird);*/
-
         // обработка введенных данных
-        // пытаемся поменять тип данных на integer
+        // пытаемся поменять тип данных на Integer
         // если    получается обрабатываем как Integer
         // если не получается обрабатываем как String  catch (NumberFormatException e)
         try {
-            // обработка данных как Integer
-            // меняем тип данных на integer
-            int firstInt = Integer.parseInt(first.trim());
-            // System.out.println("Первый символ в Integer " +firstInt);
-            // юникод введенного символа
+
+            // получаем юникод введенного символа
             // задаем выведенный символ юникод в переменную
-            // обрабатывается только первый знак
+            // обрабатывается только первый знак невозможно обработать двойные символы XX
+            int firstInt = Integer.parseInt(first.trim());
             int secondInt = second.codePointAt(0);
             int firdInt = Integer.parseInt(fird.trim());
 
@@ -67,10 +60,8 @@ public class Main {
         } catch (NumberFormatException e) {
 
             // создаем массив для обработки входящих значений от 0 до 10
-            String[] romanInput = {"O", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X",};
-
             // ищем по индексу первый символ в массиве и возвращаем найденный индекс
-            // если элемента нет выбрасывается -1
+            String[] romanInput = {"O", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X",};
             int indexFirst = -1;
             for (int i=0; i<romanInput.length; i++) {
                 if (romanInput[i].equals(first)) {
@@ -78,9 +69,11 @@ public class Main {
                     break;
                 }
             }
+            if (indexFirst == -1){
+                System.out.println("Введено неверное значение " +first);
+                indexFirst = 0;
+            }
 
-            // ищем по индексу первый символ в массиве и возвращаем найденный индекс
-            // если элемента нет выбрасывается -1
             int indexFird = -1;
             for (int iii=0; iii<romanInput.length; iii++) {
                 if (romanInput[iii].equals(fird)) {
@@ -88,7 +81,10 @@ public class Main {
                     break;
                 }
             }
-            // System.out.println(indexFird +" "+indexFirst +" полученное из Str первое и третье число");
+            if (indexFird == -1){
+                System.out.println("Введено неверное значение " +fird);
+                indexFird = 0;
+            }
 
             // обработка математических операция для романских цифр
             // переводим математический символ в юникод,
@@ -120,14 +116,14 @@ public class Main {
 
                     Сonversion conversionDiv = new Сonversion();
                     String divisionAfter = conversionDiv.gettingString(divisionStrByIndex);
-                    System.out.println("Деление Int " +divisionAfter);
+                    System.out.println("Деление Str " +divisionAfter);
                     break;
                 case 42 :
                     int multiplicationStrByIndex = indexFirst * indexFird;
 
                     Сonversion conversionMult = new Сonversion();
                     String multiplicationAfter = conversionMult.gettingString(multiplicationStrByIndex);
-                    System.out.println("Умножение Int " +multiplicationAfter);
+                    System.out.println("Умножение Str " +multiplicationAfter);
                     break;
                 // вместо else
                 default:
@@ -137,7 +133,7 @@ public class Main {
     }
 }
 // class Сonversion 2 -> II
-// создадим класс для конвертации Арабских цифр в Римски
+// создадим класс для конвертации Арабских цифр в Римские
 // в классе создадим массив с полным списком Римских цифр до 100 (макс значение 10*10)
 // создадим метод в который передается Арабская цифра 2, по индексу 2 сопоставим цифру II в массиве
 
